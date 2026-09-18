@@ -1,0 +1,27 @@
+services:
+  modsec-waf:
+    image: owasp/modsecurity-crs:nginx
+    container_name: modsec-waf
+    ports:
+      - "80:8080"          # WAF port
+    environment:
+      # Started in DetectionOnly to baseline before blocking 
+      - PARANOIA=1
+      - ANOMALY_INBOUND=5
+      - ANOMALY_OUTBOUND=4
+      - BACKEND=http://dvwa:80   # actual DVWA container name from `docker ps`
+      - MODSEC_RULE_ENGINE=DetectionOnly
+#      - MODSEC_AUDIT_LOG=/var/log/modsecurity/audit.log
+      - MODSEC_AUDIT_ENGINE=On      # logs everything during baseline, not just error-status requests
+      # MODSEC_AUDIT_LOG left at its default (/dev/stdout) so `docker logs` shows audit entries directly
+    volumes:
+      - ./custom-rules/custom-dvwa-rules.conf:/etc/modsecurity.d/owasp-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+#    volumes:
+#      - ./custom-rules:/etc/modsecurity.d/owasp-crs/rules/custom
+#      - ./logs:/var/log/modsecurity
+    networks:
+      - dvwa-net
+
+networks:
+  dvwa-net:
+    external: true      # existing bridge network connected to dvwa
