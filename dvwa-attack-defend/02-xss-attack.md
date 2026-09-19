@@ -41,4 +41,4 @@ Device is infected
 
 ## Note
 
-The payload executes each time the browser is refreshed or a new tab is created from the webpage demonstrated persistence.
+The payload executes each time the browser is refreshed demonstrating persistence.
