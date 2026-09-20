@@ -28,7 +28,7 @@ dvwa-prestashop-security-audit/
 │   ├── security-checklist.md
 │   ├── attack-simulation-report.md
 │   └── screenshots/
-└── Assignment-3-Deliverable.docx
+└── Deliverable.pdf
 ```
 
 ## Lab Environment
